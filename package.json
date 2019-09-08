@@ -1,0 +1,42 @@
+{
+  "name": "HexletDiff",
+  "version": "0.0.1",
+  "description": "find differencies in configuration files ",
+  "main": "index.js",
+  "bin": {
+    "gendiff": "dist/bin/gendiff.js"
+  },
+  "files": [
+    "dist"
+  ],
+  "scripts": {
+    "build": "NODE_ENV=production babel src --out-dir dist --source-maps inline",
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "prepublishOnly": "npm run build"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/EvgeniyLarkov/frontend-project-lvl2.git"
+  },
+  "author": "EvgeniyLarkov",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/EvgeniyLarkov/frontend-project-lvl2/issues"
+  },
+  "homepage": "https://github.com/EvgeniyLarkov/frontend-project-lvl2#readme",
+  "dependencies": {
+    "commander": "^3.0.1"
+  },
+  "devDependencies": {
+    "@babel/cli": "^7.6.0",
+    "@babel/core": "^7.6.0",
+    "@babel/node": "^7.6.1",
+    "@babel/preset-env": "^7.6.0",
+    "@types/node": "^12.7.4",
+    "babel-eslint": "^10.0.3",
+    "eslint": "^6.3.0",
+    "eslint-config-airbnb-base": "^14.0.0",
+    "eslint-plugin-babel": "^5.3.0",
+    "eslint-plugin-import": "^2.18.2"
+  }
+}
