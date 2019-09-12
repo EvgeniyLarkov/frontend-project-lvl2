@@ -34,33 +34,8 @@ test('empty object', () => {
 });
 
 test('flat json test', () => {
-  const before = `{
-  "host": "hexlet.io",
-  "timeout": 50,
-  "proxy": "123.234.53.22",
-  "follow": false
-  }`;
-
-  const after = `{
-  "timeout": 20,
-  "verbose": true,
-  "host": "hexlet.io"
-  }`;
-
-  const result = `{
-  host: hexlet.io
-+ timeout: 20
-- timeout: 50
-- proxy: 123.234.53.22
-- follow: false
-+ verbose: true
-}`;
-
-  fs.writeFileSync('testfile1.json', before);
-  fs.writeFileSync('testfile2.json', after);
-
-  expect(gendiff('testfile1.json', 'testfile2.json')).toBe(result);
-
-  fs.unlinkSync('testfile1.json');
-  fs.unlinkSync('testfile2.json');
+  const filePath1 = `${__dirname}/../__fixtures__/testFile1.json`;
+  const filePath2 = `${__dirname}/../__fixtures__/testFile2.json`;
+  const result = fs.readFileSync(`${__dirname}/../__fixtures__/jsonparseResult`, 'utf-8');
+  expect(gendiff(filePath1, filePath2)).toBe(result);
 });
