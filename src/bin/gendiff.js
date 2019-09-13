@@ -1,7 +1,7 @@
 #!/usr/bin/env node
 
 import { has } from 'lodash/fp';
-import * as fs from 'fs';
+import parser from '../parsers';
 
 const program = require('commander');
 
@@ -33,12 +33,7 @@ export const findDifferencies = (firstConfig, secondConfig) => {
 export const buildResult = (differencies) => `{\n${differencies.join('\n')}\n}`;
 
 export default (pathToFile1, pathToFile2) => {
-  const firstFile = fs.readFileSync(pathToFile1);
-  const secondFile = fs.readFileSync(pathToFile2);
-
-  const parsedFirstFile = JSON.parse(firstFile);
-  const parsedSecondFile = JSON.parse(secondFile);
-
-  const differencies = findDifferencies(parsedFirstFile, parsedSecondFile);
+  const parsedFiles = parser(pathToFile1, pathToFile2);
+  const differencies = findDifferencies(...parsedFiles);
   return buildResult(differencies);
 };

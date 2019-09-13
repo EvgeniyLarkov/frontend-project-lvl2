@@ -33,9 +33,21 @@ test('empty object', () => {
   expect(findDifferencies(before, after)).toStrictEqual(result);
 });
 
-test('flat json test', () => {
-  const filePath1 = `${__dirname}/../__fixtures__/testFile1.json`;
-  const filePath2 = `${__dirname}/../__fixtures__/testFile2.json`;
-  const result = fs.readFileSync(`${__dirname}/../__fixtures__/jsonparseResult`, 'utf-8');
-  expect(gendiff(filePath1, filePath2)).toBe(result);
+describe('various formats tests', () => {
+  const testFiles = [
+    [
+      `${__dirname}/../__fixtures__/testFile1.json`,
+      `${__dirname}/../__fixtures__/testFile2.json`],
+    [
+      `${__dirname}/../__fixtures__/testFile1.yaml`,
+      `${__dirname}/../__fixtures__/testFile2.yaml`],
+    [
+      `${__dirname}/../__fixtures__/testFile1.ini`,
+      `${__dirname}/../__fixtures__/testFile2.ini`],
+  ];
+  const result = fs.readFileSync(`${__dirname}/../__fixtures__/parseResult`, 'utf-8');
+
+  test.each(testFiles)('flat test', (filePath1, filePath2) => {
+    expect(gendiff(filePath1, filePath2)).toBe(result);
+  });
 });
