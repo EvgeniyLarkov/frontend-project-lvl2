@@ -1,17 +1,11 @@
-import { extname } from 'path';
 import * as yaml from 'js-yaml';
-import * as ini from 'iniparser';
-import * as fs from 'fs';
+import * as ini from 'ini';
 
-export default (pathToFile1, pathToFile2) => {
-  const file1 = fs.readFileSync(pathToFile1, 'utf8');
-  const file2 = fs.readFileSync(pathToFile2, 'utf8');
-  const fileExtension = extname(pathToFile1);
-
+export default (firstConfig, secondConfig, filesExtension) => {
   const parsers = {
     '.yaml': (file) => yaml.safeLoad(file),
     '.json': (file) => JSON.parse(file),
-    '.ini': (file) => ini.parseString(file),
+    '.ini': (file) => ini.parse(file),
   };
-  return [parsers[fileExtension](file1), parsers[fileExtension](file2)];
+  return [parsers[filesExtension](firstConfig), parsers[filesExtension](secondConfig)];
 };
