@@ -1,7 +1,10 @@
-import { has, flatten } from 'lodash/fp';
+import { has } from 'lodash/fp';
 import * as fs from 'fs';
 import { extname } from 'path';
-import parser from './parsers';
+import parse from './parsers';
+import stairlike from './formatters/stairlike';
+import plain from './formatters/plain';
+import jsonify from './formatters/json';
 
 const findDifferencies = (firstConfig, secondConfig) => {
   const differencies = Object.keys(firstConfig).reduce((acc, key) => {
@@ -24,32 +27,21 @@ const findDifferencies = (firstConfig, secondConfig) => {
   return differencies.concat(addedProperties);
 };
 
-const render = (data) => {
-  const buildResult = (tree, treeDepth) => {
-    const buildString = (value) => ((value instanceof Object)
-      ? `{\n${buildResult(value, treeDepth + 2)}\n${'  '.repeat(treeDepth)}  }`
-      : value);
-    const statusActions = {
-      added: (item) => [`+ ${item.key}: `, buildString(item.afterValue)],
-      changed: (item) => [...statusActions.added(item), `\n${'  '.repeat(treeDepth)}`, ...statusActions.deleted(item)],
-      deleted: (item) => [`- ${item.key}: `, buildString(item.beforeValue)],
-      notChanged: (item) => [`  ${item.key}: `, buildString(item.beforeValue)],
-      hasChild: (item) => [`  ${item.key}: `, buildString(item.children)],
-    };
-    if (!Array.isArray(tree)) {
-      return Object.keys(tree).map((key) => [`${'  '.repeat(treeDepth)}  ${key}: ${tree[key]}`]).join('\n');
-    }
-    const result = tree.map((item) => statusActions[item.status](item).join(''));
-    return flatten(result).map((item) => '  '.repeat(treeDepth) + item).join('\n');
+export default (pathToFile1, pathToFile2, format = 'json') => {
+  const formatters = {
+    stairlike: (data) => stairlike(data),
+    plain: (data) => plain(data),
+    json: (data) => jsonify(data),
   };
-  return `{\n${buildResult(data, 1)}\n}`;
-};
-
-export default (pathToFile1, pathToFile2) => {
   const filesExtension = extname(pathToFile1);
   const firstConfig = fs.readFileSync(pathToFile1, 'utf8');
   const secondConfig = fs.readFileSync(pathToFile2, 'utf8');
-  const parsedFiles = parser(firstConfig, secondConfig, filesExtension);
+  const parsedFiles = parse(firstConfig, secondConfig, filesExtension);
   const differencies = findDifferencies(...parsedFiles);
-  return render(differencies);
+  return formatters[format](differencies);
 };
+
+// to DO: отрефакторить stairlike
+// изменить названия в formatters (item, key) в функциях
+// прикрутить в бине вызовы в commander'e
+// разобраться с test coverage

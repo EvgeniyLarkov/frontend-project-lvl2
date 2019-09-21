@@ -26,11 +26,19 @@ describe('various formats tests', () => {
   ];
   const resultFlat = fs.readFileSync(`${__dirname}/../__fixtures__/parseResult`, 'utf-8');
   const resultComplex = fs.readFileSync(`${__dirname}/../__fixtures__/resultComplex`, 'utf-8');
+  const resultPlain = fs.readFileSync(`${__dirname}/../__fixtures__/resultPlain`, 'utf-8');
+  const resultJson = fs.readFileSync(`${__dirname}/../__fixtures__/resultJson`, 'utf-8');
 
   test.each(testFilesFlat)('flat test', (filePath1, filePath2) => {
-    expect(gendiff(filePath1, filePath2)).toBe(resultFlat);
+    expect(gendiff(filePath1, filePath2, 'stairlike')).toBe(resultFlat);
   });
   test.each(testFilesComplex)('complex test', (filePath1, filePath2) => {
-    expect(gendiff(filePath1, filePath2)).toBe(resultComplex);
+    expect(gendiff(filePath1, filePath2, 'stairlike')).toBe(resultComplex);
+  });
+  test.each(testFilesComplex)('plain test', (filePath1, filePath2) => {
+    expect(gendiff(filePath1, filePath2, 'plain')).toBe(resultPlain);
+  });
+  test.each(testFilesComplex)('json test', (filePath1, filePath2) => {
+    expect(gendiff(filePath1, filePath2, 'json')).toBe(resultJson);
   });
 });
