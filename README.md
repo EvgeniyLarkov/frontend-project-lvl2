@@ -8,12 +8,12 @@ With this package you can find differencies in configuration files(.json, .ini, 
 This project was made for educational purposes.
 
 ### install
-> $ make install  
-> $ npm run build  
-> $ npm link
+` $ make install`  
+` $ npm run build`  
+` $ npm link`  
 
 ### usage
-> $ gendiff [options] <filePath1> <filePath2>
+` $ gendiff [options] <filePath1> <filePath2>`  
 
 ### comparsion of two '.ini' files using pretty style formatting
 
