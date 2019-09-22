@@ -3,18 +3,18 @@ import { flatten } from 'lodash/fp';
 export default (data) => {
   const buildResult = (tree, treeRoot) => {
     const buildRoot = (key) => `'${[...treeRoot, key].join('.')}'`;
-    const buildString = (item) => {
-      if (item instanceof Object) {
+    const buildValue = (value) => {
+      if (value instanceof Object) {
         return '[complex value]';
       }
-      if (typeof item === 'string') {
-        return `'${item}'`;
+      if (typeof value === 'string') {
+        return `'${value}'`;
       }
-      return item;
+      return value;
     };
     const statusActions = {
-      added: (item) => `Property ${buildRoot(item.key)} was added with value: ${buildString(item.afterValue)}`,
-      changed: (item) => `Property ${buildRoot(item.key)} was updated. From ${buildString(item.beforeValue)} to ${buildString(item.afterValue)}`,
+      added: (item) => `Property ${buildRoot(item.key)} was added with value: ${buildValue(item.afterValue)}`,
+      changed: (item) => `Property ${buildRoot(item.key)} was updated. From ${buildValue(item.beforeValue)} to ${buildValue(item.afterValue)}`,
       deleted: (item) => `Property ${buildRoot(item.key)} was removed`,
       hasChild: (item) => buildResult(item.children, [...treeRoot, item.key]),
     };

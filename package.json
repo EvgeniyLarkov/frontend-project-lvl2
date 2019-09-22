@@ -1,8 +1,8 @@
 {
-  "name": "HexletDiff",
+  "name": "hexletdifferencies",
   "version": "0.0.1",
   "description": "find differencies in configuration files",
-  "main": "package.json",
+  "main": "./src",
   "bin": {
     "gendiff": "dist/bin/gendiff.js"
   },
@@ -44,7 +44,6 @@
     "eslint-plugin-import": "^2.18.2",
     "eslint-plugin-jest": "^22.17.0",
     "eslint-plugin-lodash-fp": "^2.2.0-a1",
-    "jest": "^24.9.0",
-    "nyc": "^14.1.1"
+    "jest": "^24.9.0"
   }
 }
