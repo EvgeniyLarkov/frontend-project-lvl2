@@ -8,7 +8,7 @@ program
   .arguments('<firstConfig> <secondConfig>')
   .description('Compares two configuration files and shows a difference.')
   .option('-f, --format [type]', 'output format', 'pretty')
-  .action((path1, path2) => {
-    console.log(gendiff(path1, path2, program.format));
+  .action((filePath1, filePath2) => {
+    console.log(gendiff(filePath1, filePath2, program.format));
   })
   .parse(process.argv);
