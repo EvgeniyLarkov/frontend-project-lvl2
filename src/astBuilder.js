@@ -34,7 +34,7 @@ const genDifferencies = (firstConfig, secondConfig) => {
     const { type, action } = keysActions.find(
       ({ check }) => check(firstConfig, secondConfig, key),
     );
-    return { key, type, ...action(firstConfig[key], secondConfig[key], getDifferencies) };
+    return { key, type, ...action(firstConfig[key], secondConfig[key], genDifferencies) };
   });
 };
 
