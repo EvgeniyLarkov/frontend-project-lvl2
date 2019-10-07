@@ -2,7 +2,7 @@ import { readFileSync } from 'fs';
 import { extname } from 'path';
 import parse from './parsers';
 import getAst from './astBuilder';
-import formatters from './formatters';
+import formatAst from './formatters';
 
 export default (filePath1, filePath2, format = 'json') => {
   const configExtension1 = extname(filePath1).slice(1);
@@ -15,5 +15,5 @@ export default (filePath1, filePath2, format = 'json') => {
   const parsedConfig2 = parse(secondConfig, configExtension2);
 
   const ast = getAst(parsedConfig1, parsedConfig2);
-  return formatters(format)(ast);
+  return formatAst(format)(ast);
 };
